@@ -13,7 +13,7 @@ def askneofonie(text):
   headers = {'X-Api-Key': apikey}
   services = 'tags' # 'categories,date,entities'
 
-  params = urllib.urlencode({'text': text, 'services':services})
+  params = urllib.urlencode({'text': unicode(text).encode('utf-8'), 'services':services})
   r = requests.post('https://api.neofonie.de/rest/txt/analyzer', params=params, headers=headers)
   if r.status_code == 200:
     return json.loads(r.text)
