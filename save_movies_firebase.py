@@ -33,7 +33,7 @@ def main():
       mm_movie['IMDB_Id'] = i
       mm_movies.append(mm_movie)
       #write to firebase
-      result = fb.post('/movies', m)
+      result = fb.post('/movies', mm_movie)
       print result
     except:
       print "Failed: Id",i , "not in German Wiki Top 100 grossing, Title:", title
