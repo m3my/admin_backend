@@ -19,16 +19,19 @@ def askneofonie(text):
     return json.loads(r.text)
   else:
     print "There's something wrong! Expected code 200, got " + str(r.status_code) + "."
+    print r.reason
     return None
 
 def main():
-  f = open('imdb_movies.pickle','r')
-  imdb_movies = pickle.load(f)
+  f = open('wiki_movies.pickle','r')
+  src_movies = pickle.load(f)
   f.close()
 
   neofonie_movies = {}
-  for m in imdb_movies:
-    neofonie_movies[m.getID()] = askneofonie(m['plot'])
+  keys = src_movies.keys()
+  keys.sort()
+  for k in keys:
+    neofonie_movies[k] = askneofonie(src_movies[k][:6500])
 
   f = open('neofonie_movies.pickle','w')
   f.write(pickle.dumps(neofonie_movies))
