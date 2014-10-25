@@ -22,9 +22,9 @@ def main():
 
   for i in imdb_movies:
     mm_movie = {}
+    title = i['title']
     try:
       neofonie_movie = neofonie_movies[i.getID()]
-      title = i['title']
       mm_movie['Title'] = title
       mm_movie['Tags'] = filter_tags(neofonie_movie, title)
       mm_movie['Cover_Url'] = i['full-size cover url']
