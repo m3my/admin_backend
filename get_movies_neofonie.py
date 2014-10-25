@@ -31,6 +31,7 @@ def main():
   keys = src_movies.keys()
   keys.sort()
   for k in keys:
+    print k
     neofonie_movies[k] = askneofonie(src_movies[k][:6500])
 
   f = open('neofonie_movies.pickle','w')

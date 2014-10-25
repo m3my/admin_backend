@@ -121,9 +121,13 @@ def main():
   #   print ids
   #   return
 
-  movies = []
-  for i in _movie_ids[:250]:
-    movies.append(ia.get_movie(i))
+  movies = {}
+  for i in _movie_ids[5:15]:
+    movies[i] = {}
+    movies[i]['Cover_Url'] = ia.get_movie(i)['full-size cover url']
+    movies[i]['Title'] = ia.get_movie(i)['title']
+    print movies[i]
+
 
   f = open('imdb_movies.pickle','w')
   f.write(pickle.dumps(movies))

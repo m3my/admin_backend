@@ -20,18 +20,18 @@ def main():
 
   mm_movies = []
 
-  for i in imdb_movies:
+  for i,m in imdb_movies.items():
     mm_movie = {}
-    title = i['title']
+    title = m['Title']
     try:
-      neofonie_movie = neofonie_movies[i.getID()]
+      neofonie_movie = neofonie_movies[i]
       mm_movie['Title'] = title
       mm_movie['Tags'] = filter_tags(neofonie_movie, title)
-      mm_movie['Cover_Url'] = i['full-size cover url']
-      mm_movie['IMDB_Id'] = i.getID()
+      mm_movie['Cover_Url'] = m['Cover_Url']
+      mm_movie['IMDB_Id'] = i
       mm_movies.append(mm_movie)
     except:
-      print "Failed: Movie", title, "not in German Wiki Top 100 grossing", i.getID()
+      print "Failed: Id",i , "not in German Wiki Top 100 grossing, Title:", title 
 
     #write to firebase
     fb = firebase.FirebaseApplication('https://popping-heat-9121.firebaseio.com/', None)

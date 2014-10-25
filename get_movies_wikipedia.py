@@ -106,14 +106,18 @@ _titles_ = [
   'Hangover_2'
 ]
 
-def get_imdb_link(title):
+def get_imdb_id(title):
   base = 'http://de.wikipedia.org/wiki/' + title
   r = requests.get(base)
+  result = None
   if r.status_code == 200:
     start = r.text.find('http://www.imdb.com/title/tt')+28
-    return r.text[start:start+7]
+    result = r.text[start:start+7]
+    print result
   else:
     print "There's something wrong! Expected code 200, got " + str(r.status_code) + "."
+
+  return result
 
 def get_plot_wiki(title):
   base = 'http://de.wikipedia.org/w/api.php?action=query&prop=revisions&format=json&rvprop=content&rvlimit=1&rvsection=1&redirects=&titles=' + title
@@ -134,7 +138,9 @@ def main():
   for t in _titles_:
     p = get_plot_wiki(t)
     if p:
-      wiki_movies[get_imdb_link(t)] = p
+      imdbid = get_imdb_id(t)
+      if imdbid:
+        wiki_movies[imdbid] = p
 
   f = open('wiki_movies.pickle','w')
   f.write(pickle.dumps(wiki_movies))
