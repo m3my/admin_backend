@@ -28,7 +28,7 @@ def main():
 
   neofonie_movies = {}
   for m in imdb_movies:
-    neofonie_movies[m.getID()] = askneofonie(m.summary())
+    neofonie_movies[m.getID()] = askneofonie(m['plot'])
 
   f = open('neofonie_movies.pickle','w')
   f.write(pickle.dumps(neofonie_movies))
