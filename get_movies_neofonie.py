@@ -9,7 +9,8 @@ def pprint(j):
 def askneofonie(text):
   """Ask the neofonie TXT Werk API to extract important tags from a text."""
 
-  apikey = 'b128bbe8-c7d5-47a1-2389-dafb2b8127cb'
+  #apikey = 'b128bbe8-c7d5-47a1-2389-dafb2b8127cb'
+  apikey = 'd55e86f3-5a44-f51c-7813-4afaa15b6ac4'
   headers = {'X-Api-Key': apikey}
   services = 'tags' # 'categories,date,entities'
 
