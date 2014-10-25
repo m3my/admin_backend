@@ -24,7 +24,7 @@ def main():
     mm_movie = {}
     neofonie_movie = neofonie_movies[i.getID()]
     mm_movie['Title'] = i['title']
-    mm_movie['Tags'] = [tag['term'] for tag in neofonie_movie['tags']]
+    mm_movie['Tags'] = filter_tags(neofonie_movie)
     mm_movie['Cover_Url'] = i['full-size cover url']
     mm_movie['IMDB_Id'] = i.getID()
     mm_movies.append(mm_movie)
