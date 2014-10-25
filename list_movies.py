@@ -10,6 +10,7 @@
 import json, requests
 from optparse import OptionParser
 from imdb import IMDb
+import pickle
 
 _version = '1.0'
 
@@ -66,22 +67,22 @@ def get_string(a):
 
 def pprint(j):
   """Pretty-print a JSON object"""
-    print json.dumps(j, sort_keys=True, indent=4, separators=(',', ': '))
+  print json.dumps(j, sort_keys=True, indent=4, separators=(',', ': '))
 
 def askneofonie(text):
   """Ask the neofonie TXT Werk API to extract important tags from a text."""
-    
-    apikey = 'b128bbe8-c7d5-47a1-2389-dafb2b8127cb'
-    headers = {'X-Api-Key': apikey}
-    services = 'tags' # 'categories,date,entities'
 
-    params = urllib.urlencode({'text': text, 'services':services})
-    r = requests.post('https://api.neofonie.de/rest/txt/analyzer', params=params, headers=headers)
-    if r.status_code == 200:
-        return json.loads(r.text)
-    else:
-        print "There's something wrong! Expected code 200, got " + str(r.status_code) + "."
-        return None
+  apikey = 'b128bbe8-c7d5-47a1-2389-dafb2b8127cb'
+  headers = {'X-Api-Key': apikey}
+  services = 'tags' # 'categories,date,entities'
+
+  params = urllib.urlencode({'text': text, 'services':services})
+  r = requests.post('https://api.neofonie.de/rest/txt/analyzer', params=params, headers=headers)
+  if r.status_code == 200:
+      return json.loads(r.text)
+  else:
+      print "There's something wrong! Expected code 200, got " + str(r.status_code) + "."
+      return None
 
 
 def main():
@@ -108,23 +109,25 @@ def main():
 
   ia = IMDb()
 
-  get_one_single_movie = False
-  if get_one_single_movie:
-    i = '0133093' # The Matrix (1999)
-    m = ia.get_movie(i)
-    print m[_key_title]+':'
-    print '  ', '; '.join([k+'='+get_string(m[k]) for k in _keys])
+  # get_one_single_movie = False
+  # if get_one_single_movie:
+  #   i = '0133093' # The Matrix (1999)
+  #   m = ia.get_movie(i)
+  #   return m
+  #
+  # search_for_movies = False
+  # if search_for_movies:
+  #   ids = ia.search_keyword(u'passion')
+  #   print ids
+  #   return
 
-  search_for_movies = False
-  if search_for_movies:
-    ids = ia.search_keyword(u'passion')
-    print ids
-    return
+  movies = []
+  for i in _movie_ids[:1]:
+    movies.append(ia.get_movie(i))
 
-  for i in _movie_ids:
-    m = ia.get_movie(i)
-    print m[_key_title]+':',
-    print '; '.join([k+'='+get_string(m[k]) for k in _keys])
+  f = open('imdb_movies.pickle','w')
+  f.write(pickle.dumps(movies))
+  f.close()
 
   #for k in _keys:
   #  a = m[k]
