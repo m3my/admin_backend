@@ -133,9 +133,10 @@ def main():
   keys.sort()
 
   for i in keys:
+    m = ia.get_movie(i)
     movies[i] = {}
-    movies[i]['Cover_Url'] = ia.get_movie(i)['full-size cover url']
-    movies[i]['Title'] = ia.get_movie(i)['title']
+    movies[i]['Cover_Url'] = m['full-size cover url']
+    movies[i]['Title'] = m['title']
     print movies[i]
 
   f = open('imdb_movies.pickle','w')
