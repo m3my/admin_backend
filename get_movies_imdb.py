@@ -122,7 +122,7 @@ def main():
   #   return
 
   movies = {}
-  for i in _movie_ids[5:15]:
+  for i in _movie_ids:
     movies[i] = {}
     movies[i]['Cover_Url'] = ia.get_movie(i)['full-size cover url']
     movies[i]['Title'] = ia.get_movie(i)['title']
