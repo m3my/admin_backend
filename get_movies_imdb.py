@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# list_movies.py
+# get_movies_imdb.py
 #
 # list movies retrieved from imdb
 #
@@ -134,8 +134,6 @@ def main():
   #  print k, a,
 
   #i += 1
-
-
 
 if __name__ == "__main__":
   main()
