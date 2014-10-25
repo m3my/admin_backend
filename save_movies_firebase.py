@@ -31,13 +31,13 @@ def main():
       mm_movie['IMDB_Id'] = i
       mm_movies.append(mm_movie)
     except:
-      print "Failed: Id",i , "not in German Wiki Top 100 grossing, Title:", title 
+      print "Failed: Id",i , "not in German Wiki Top 100 grossing, Title:", title
 
-    #write to firebase
-    fb = firebase.FirebaseApplication('https://popping-heat-9121.firebaseio.com/', None)
-    for m in mm_movies:
-      result = fb.post('/movies', m)
-      print result
+  #write to firebase
+  fb = firebase.FirebaseApplication('https://popping-heat-9121.firebaseio.com/', None)
+  for m in mm_movies:
+    result = fb.post('/movies', m)
+    print result
 
 
 if __name__ == "__main__":
