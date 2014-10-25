@@ -122,7 +122,7 @@ def main():
   #   return
 
   movies = []
-  for i in _movie_ids[:1]:
+  for i in _movie_ids[:250]:
     movies.append(ia.get_movie(i))
 
   f = open('imdb_movies.pickle','w')
