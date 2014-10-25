@@ -20,6 +20,8 @@ def main():
 
   mm_movies = []
 
+  fb = firebase.FirebaseApplication('https://popping-heat-9121.firebaseio.com/', None)
+
   for i,m in imdb_movies.items():
     mm_movie = {}
     title = m['Title']
@@ -30,15 +32,11 @@ def main():
       mm_movie['Cover_Url'] = m['Cover_Url']
       mm_movie['IMDB_Id'] = i
       mm_movies.append(mm_movie)
+      #write to firebase
+      result = fb.post('/movies', m)
+      print result
     except:
       print "Failed: Id",i , "not in German Wiki Top 100 grossing, Title:", title
-
-  #write to firebase
-  fb = firebase.FirebaseApplication('https://popping-heat-9121.firebaseio.com/', None)
-  for m in mm_movies:
-    result = fb.post('/movies', m)
-    print result
-
 
 if __name__ == "__main__":
   main()
