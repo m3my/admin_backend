@@ -7,8 +7,8 @@
 # Copyright (C) 2014 Jeremy Tammik, Autodesk Inc.
 #
 #from __future__ import unicode_literals
+import json, requests
 from optparse import OptionParser
-#import json, requests
 from imdb import IMDb
 
 _version = '1.0'
@@ -287,6 +287,24 @@ def get_string(a):
   if list == type(a): return ', '.join( [get_string(e) for e in a])
   return str(a)
 
+def pprint(j):
+    print json.dumps(j, sort_keys=True, indent=4, separators=(',', ': '))
+
+def askneofonie(text):
+    
+    apikey = 'b128bbe8-c7d5-47a1-2389-dafb2b8127cb'
+    headers = {'X-Api-Key': apikey}
+    services = 'tags' # 'categories,date,entities'
+
+    params = urllib.urlencode({'text': text, 'services':services})
+    r = requests.post('https://api.neofonie.de/rest/txt/analyzer', params=params, headers=headers)
+    if r.status_code == 200:
+        return json.loads(r.text)
+    else:
+        print "There's something wrong! Expected code 200, got " + str(r.status_code) + "."
+        return None
+
+
 def main():
   "list movies retrieved from imdb"
 
@@ -334,6 +352,8 @@ def main():
   #  print k, a,
 
   #i += 1
+
+
 
 if __name__ == "__main__":
   main()
