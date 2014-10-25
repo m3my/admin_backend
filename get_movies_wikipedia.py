@@ -29,7 +29,7 @@ _titles_ = [
   'Ich_%E2%80%93_Einfach_Unverbesserlich_2',
   'Pirates_of_the_Caribbean_%E2%80%93_Am_Ende_der_Welt',
   'Harry_Potter_und_die_Heiligt%C3%BCmer_des_Todes:_Teil_1',
-  'Der_Hobbit:_Smaugs_Ein%C3%B6de  '',',
+  'Der_Hobbit:_Smaugs_Ein%C3%B6de',
   'Harry_Potter_und_der_Orden_des_Ph%C3%B6nix_(Film)',
   'Findet_Nemo',
   'Harry_Potter_und_der_Halbblutprinz_(Film)',
@@ -118,15 +118,23 @@ def get_imdb_link(title):
 def get_plot_wiki(title):
   base = 'http://de.wikipedia.org/w/api.php?action=query&prop=revisions&format=json&rvprop=content&rvlimit=1&rvsection=1&redirects=&titles=' + title
   r = requests.get(base)
+  result = None
   if r.status_code == 200:
-    return json.loads(r.text)['query']['pages'].values()[0]['revisions'][0]['*']
+    try:
+      result = json.loads(r.text)['query']['pages'].values()[0]['revisions'][0]['*']
+    except:
+      print json.loads(r.text)['query']['pages'].values()[0]
   else:
     print "There's something wrong! Expected code 200, got " + str(r.status_code) + "."
+
+  return result
 
 def main():
   wiki_movies = {}
   for t in _titles_:
-    wiki_movies[get_imdb_link(t)] = get_plot_wiki(t)
+    p = get_plot_wiki(t)
+    if p:
+      wiki_movies[get_imdb_link(t)] = p
 
   f = open('wiki_movies.pickle','w')
   f.write(pickle.dumps(wiki_movies))
