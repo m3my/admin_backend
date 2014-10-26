@@ -29,7 +29,7 @@ def main():
       neofonie_movie = neofonie_movies[i]
       mm_movie['Title'] = title
       mm_movie['Tags'] = filter_tags(neofonie_movie, title)
-      mm_movie['Cover_Url'] = m['Cover_Url']
+      mm_movie['Cover_Url'] = '/images/'+i+'.jpg'
       mm_movie['IMDB_Id'] = i
       mm_movies.append(mm_movie)
       #write to firebase

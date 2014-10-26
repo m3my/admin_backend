@@ -7,10 +7,10 @@ def saveCover(id, url):
   r = requests.get(url, stream=True)
   result = None
   if r.status_code == 200:
-    with open('images/'+id+'.jpg', 'wb') as f:
+    with open('../images/'+id+'.jpg', 'wb') as f:
         r.raw.decode_content = True
         shutil.copyfileobj(r.raw, f)
-    print i
+    print id
 
   else:
     print "There's something wrong! Expected code 200, got " + str(r.status_code) + "."
