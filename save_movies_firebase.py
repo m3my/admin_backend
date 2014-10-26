@@ -1,12 +1,12 @@
 from firebase import firebase
-import json, pickle
+import json, pickle, re
 
 
 def filter_tags(tagjson, movietitle):
 
   moviewords = set(movietitle.lower().split())
-  alltags = [tag['term'] for tag in tagjson['tags']]
-  return filter(lambda tag: len(moviewords.intersection(tag.lower().split())) == 0, alltags)
+  alltags = [re.sub(r'[^a-zA-Z0-9 ]', '', tag['term']) for tag in tagjson['tags']]
+  return list(set(filter(lambda tag: len(tag) > 0 and len(moviewords.intersection(tag.lower().split())) == 0, alltags)))
 
 def main():
 
